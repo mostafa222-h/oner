@@ -1,7 +1,9 @@
 <?php
 
+use App\Jobs\SendEmail;
 use App\Mail\TopicCreated;
 use App\Models\User;
+use App\services\notifications\Notification;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
@@ -30,6 +32,15 @@ Route::get('/users', function () {
     return view( 'user' , ['users' => $users ] );
 });
 
-Route::get('/email', function () {
-   Mail::to("a.xareian@gmail.com")->send(new TopicCreated());
+Route::get('/email', function (){
+
+    SendEmail::dispatch() ;
+  // Mail::to("a.xareian@gmail.com")->send(new TopicCreated());
+});
+
+Route::get('/sendmail', function (){
+
+   $notification = resolve(Notification::class);
+   $notification->sendEmail(User::find(1),new TopicCreated());
+
 });

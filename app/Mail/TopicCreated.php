@@ -10,6 +10,8 @@ use Illuminate\Queue\SerializesModels;
 class TopicCreated extends Mailable
 {
     use Queueable, SerializesModels;
+    private  $first_name ;
+    private $last_name ;
 
     /**
      * Create a new message instance.
@@ -18,7 +20,8 @@ class TopicCreated extends Mailable
      */
     public function __construct()
     {
-        //
+        $this->first_name = "mostafa" ;
+        $this->last_name = "hekmati" ;
     }
 
     /**
@@ -29,6 +32,8 @@ class TopicCreated extends Mailable
     public function build()
     {
         //ارجاع به blade topic-created
-        return $this->markdown('topic-created');
+        return $this->markdown('emails.topic-created')->with([
+            'full_name' => $this->first_name . $this->last_name
+        ]);
     }
 }
