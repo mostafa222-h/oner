@@ -44,3 +44,12 @@ Route::get('/sendmail', function (){
    $notification->sendEmail(User::find(1),new TopicCreated());
 
 });
+
+Route::get('/sends', function (){
+
+    $mobile = '9925961712' ;
+    $mobile_numbers = array('0' . $mobile);
+    $notification = resolve(Notification::class);
+    $notification->sendSms($mobile_numbers,'1تست');
+
+});

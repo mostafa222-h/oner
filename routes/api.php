@@ -1,5 +1,6 @@
 <?php
 
+use App\services\notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+/*Route::post('/sends', function (){
+
+    $mobile = '9925961712' ;
+    $mobile_numbers = array('0' . $mobile);
+    $notification = resolve(Notification::class);
+    $notification->sendSms($mobile_numbers,'1تست');
+
+});*/
