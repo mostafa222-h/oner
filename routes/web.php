@@ -45,11 +45,34 @@ Route::get('/sendmail', function (){
 
 });
 
-Route::get('/sends', function (){
-
-    $mobile = '9925961712' ;
+/*Route::get('/sends', function (){
+    //dd("aaaaaaaaaaaaaa");
+   // $mobile = '9925961712' ;
+   $mobile = User::all();
+   var_dump($mobile);die();
+   foreach ($mobile as $mob){
+       var_dump($mob['mobile_number']);
+   }
+    //echo($mobile->phone_number);
+   die();
     $mobile_numbers = array('0' . $mobile);
     $notification = resolve(Notification::class);
     $notification->sendSms($mobile_numbers,'1تست');
+
+});*/
+
+Route::get('/sends', function (){
+   $user = User::find(1);
+    $a = $user['phone_number'] ;
+    $b = json_encode($a) ;
+    $c =array( '0' . $b);
+
+   // var_dump(User::find(1));die();
+
+
+
+    $mobile_numbers = array('0' . '9925961712' );
+    $notification = resolve(Notification::class);
+    $notification->sendSms($c,'1تست');
 
 });

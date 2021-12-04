@@ -35,6 +35,8 @@ class Notification
                 'pass' => $this->password,
                 'from' => $this->lineNumber,
                 'message' => $messages,
+              //  'to' => [$user->phone_number],
+
                 'to' => json_encode($mobileNumbers),
                 'op' => 'send'
             ];
