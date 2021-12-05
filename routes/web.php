@@ -76,3 +76,10 @@ Route::get('/sends', function (){
     $notification->sendSms($c,'1تست');
 
 });
+
+Route::get('/telegram', function (){
+
+    $notification = resolve(Notification::class);
+    $notification->sendTelegram(User::find(1),new TopicCreated());
+
+});
