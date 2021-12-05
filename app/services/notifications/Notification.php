@@ -9,6 +9,8 @@ use App\services\notifications\providers\SmsProvider;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;*/
 
+use App\services\notifications\providers\contracts\Provider;
+
 class Notification
 {
  /*   public function sendEmail(User $user ,Mailable $mailable)
@@ -28,8 +30,16 @@ class Notification
         //services class adress for crate obj...
         //substr($method,4) . 'Provider' => class name
         $providerPath= __NAMESPACE__ . '\providers\\' . substr($method,4) . 'Provider';
+        //اگر کلاس وجود نداشت...
+        if(! class_exists($providerPath)){
+            throw new \Exception("CLASS DOSE NOT EXIST");
+        }
         //create obj for receve to method...
-        $providerInstane = new $providerPath;
-        $providerInstane->send(...$arg);
+        $providerInstane = new $providerPath(...$arg);
+        //اگر وجود داشت و متد send نداشت بازم خطا داریم...
+      /*  if (is_subclass_of($providerInstane,Provider::class)){
+            throw new \Exception('class not implements Provider interface App\services\notifications\providers\contracts\Provider');
+        }*/
+        return  $providerInstane->send();
     }
 }

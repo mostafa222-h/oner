@@ -71,7 +71,7 @@ Route::get('/sends', function (){
 
 
 
-    $mobile_numbers = array('0' . '9925961712' );
+    //$mobile_numbers = array('0' . '9925961712' );
     $notification = resolve(Notification::class);
     $notification->sendSms($c,'1تست');
 
