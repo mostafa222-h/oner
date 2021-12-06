@@ -4,18 +4,24 @@
 namespace App\services\notifications\providers;
 
 
-class SmsProvider
+use App\services\notifications\providers\contracts\Provider;
+
+class SmsProvider implements Provider
 {
     private $username;
     private $password;
     private $lineNumber;
-    public function __construct()
+    private $mobileNumbers ;
+    private $messages ;
+    public function __construct($mobileNumbers,$messages)
     {
         $this->username = '09143579954';
         $this->password = 'ZXcv*963.';
         $this->lineNumber = '9850001070700407';
+        $this->mobileNumbers = $mobileNumbers ;
+        $this->messages = $messages ;
     }
-    public function send($mobileNumbers, $messages)
+    public function send()
     {
         //ای پی ای درخاست اس ام اس ار شرکت خودش با توجه به اطلاعاتی که میخاد...
         try {
@@ -25,10 +31,10 @@ class SmsProvider
                 'uname' => $this->username,
                 'pass' => $this->password,
                 'from' => $this->lineNumber,
-                'message' => $messages,
+                'message' => $this->messages,
                 //  'to' => [$user->phone_number],
 
-                'to' => json_encode($mobileNumbers),
+                'to' => json_encode($this->mobileNumbers),
                 'op' => 'send'
             ];
             $handler = curl_init($url);

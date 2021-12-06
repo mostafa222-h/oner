@@ -19,8 +19,16 @@ use Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+/////////
+///
+Route::get('/test', function () {
+    return view('layouts.layout');
+});
+///
+///
+///
 Route::get('/contact', function () {
     return view('contact');
 });
@@ -41,6 +49,7 @@ Route::get('/email', function (){
 Route::get('/sendmail', function (){
 
    $notification = resolve(Notification::class);
+   //متدی که تو Notif نیست اجرا میشه...
    $notification->sendEmail(User::find(1),new TopicCreated());
 
 });
@@ -66,11 +75,7 @@ Route::get('/sends', function (){
     $a = $user['phone_number'] ;
     $b = json_encode($a) ;
     $c =array( '0' . $b);
-
    // var_dump(User::find(1));die();
-
-
-
     //$mobile_numbers = array('0' . '9925961712' );
     $notification = resolve(Notification::class);
     $notification->sendSms($c,'1تست');
@@ -83,3 +88,7 @@ Route::get('/telegram', function (){
     $notification->sendTelegram(User::find(1),new TopicCreated());
 
 });
+//هر وقت درخواستمون رفت به notification
+//و send email
+Route::get('/notification/send-email','NotificationsController@email')->name('notification.form.email');
+

@@ -4,6 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        ////////////////
+
+        <script
+            src="https://cdn.rtlcss.com/bootstrap/v4.5.3/js/bootstrap.min.js"
+            integrity="sha384-VmD+lKnI0Y4FPvr6hvZRw6xvdt/QZoNHQ4h5k0RL30aGkR9ylHU56BzrE2UoohWK"
+            crossorigin="anonymous"></script>
+
+        <link
+            rel="stylesheet"
+            href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+            integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe"
+            crossorigin="anonymous" />
+
+        ///////////////
         <title> {{__('public.welcome',['name'=>'مصطفی'])}}</title>
 
         <!-- Fonts -->
@@ -31,6 +45,7 @@
         // $("#test").attr('src',)
     </script>
     <body class="antialiased">
+
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
