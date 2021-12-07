@@ -4,6 +4,8 @@ use App\Jobs\SendEmail;
 use App\Mail\TopicCreated;
 use App\Models\User;
 use App\services\notifications\Notification;
+use App\services\notifications\providers\EmailProvider;
+use App\services\notifications\providers\SmsProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
@@ -48,9 +50,8 @@ Route::get('/email', function (){
 
 Route::get('/sendmail', function (){
 
-   $notification = resolve(Notification::class);
-   //متدی که تو Notif نیست اجرا میشه...
-   $notification->sendEmail(User::find(1),new TopicCreated());
+    $not = new Notification(new EmailProvider(User::find(1),new TopicCreated()));
+    return $not->processClass(new EmailProvider(User::find(1),new TopicCreated()));
 
 });
 
@@ -70,18 +71,23 @@ Route::get('/sendmail', function (){
 
 });*/
 
+
 Route::get('/sends', function (){
-   $user = User::find(1);
+/*   $user = User::find(1);
     $a = $user['phone_number'] ;
     $b = json_encode($a) ;
     $c =array( '0' . $b);
    // var_dump(User::find(1));die();
     //$mobile_numbers = array('0' . '9925961712' );
     $notification = resolve(Notification::class);
-    $notification->sendSms($c,'1تست');
-
+    $notification->sendSms($c,'1تست');*/
+    $user = User::find(1);
+    $a = $user['phone_number'] ;
+    $b = json_encode($a) ;
+    $c =array( '0' . $b);
+    $not = new Notification(new SmsProvider($c,'2تست'));
+    return $not->processClass(new SmsProvider($c,'2تست'));
 });
-
 Route::get('/telegram', function (){
 
     $notification = resolve(Notification::class);
@@ -91,4 +97,7 @@ Route::get('/telegram', function (){
 //هر وقت درخواستمون رفت به notification
 //و send email
 Route::get('/notification/send-email','NotificationsController@email')->name('notification.form.email');
+Route::post('/notification/send-email','NotificationsController@Sendemail')->name('notification.send.email');
+//ارسال داینامیک
+//Route::get('/notification/sends','NotificationsController@send')->name('notification.form.send');
 

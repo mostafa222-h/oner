@@ -2,8 +2,6 @@
 
 
 namespace App\services\notifications\providers;
-
-
 use App\services\notifications\providers\contracts\Provider;
 
 class SmsProvider implements Provider
@@ -25,15 +23,12 @@ class SmsProvider implements Provider
     {
         //ای پی ای درخاست اس ام اس ار شرکت خودش با توجه به اطلاعاتی که میخاد...
         try {
-
             $url = "https://ippanel.com/services.jspd";
             $param = [
                 'uname' => $this->username,
                 'pass' => $this->password,
                 'from' => $this->lineNumber,
                 'message' => $this->messages,
-                //  'to' => [$user->phone_number],
-
                 'to' => json_encode($this->mobileNumbers),
                 'op' => 'send'
             ];
@@ -42,12 +37,8 @@ class SmsProvider implements Provider
             curl_setopt($handler, CURLOPT_POSTFIELDS, $param);
             curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($handler);
-            //$response_array = json_decode($response);
-            //$res_code = $response_array[0];
-            //$result = $response_array[1];
             return json_decode($response);
         }catch (\Exception $ex ){
-
             return $ex->getMessage();
         }
 

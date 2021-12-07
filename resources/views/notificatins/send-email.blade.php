@@ -7,29 +7,29 @@
        <div class="col-md-8">
            <div class="card">
                <div class="card-header">
-                   Card header
+                 @lang('notification.send_email')
                </div>
                <div class="card-body">
-                   <form action="" method="post">
+                   <form action="{{route('notification.send.email')}}" method="POST">
+                       @csrf
                        <div class="form-group">
-                           <label for="test">users</label>
-                           <select class="form-control" id="test">
-                               <option value="">USERS</option>
-                               <option value="">USERS</option>
-                               <option value="">USERS</option>
-                               <option value="">USERS</option>
+                           <label for="user"> @lang('notification.users')</label>
+                           <select name="user" class="form-control" id="user">
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name }}</option>
+                                @endforeach
+
                            </select>
                        </div>
                        <div class="form-group">
-                           <label for="test">Email Type</label>
-                           <select name="test" class="form-controll" id="test">
-                               <option value="">Email Types</option>
-                               <option value="">Email Types</option>
-                               <option value="">Email Types</option>
-                               <option value="">Email Types</option>
+                           <label for="email_type"> @lang('notification.email_type')</label>
+                           <select name="email_type" class="form-controll" id="email_type">
+                           @foreach ($emailTypes as $key => $type)
+                                   <option value="{{$key}}">{{$type}}</option>
+                           @endforeach
                            </select>
                        </div>
-                       <button type="submit" class="btn btn-info">SEND</button>
+                       <button type="submit" class="btn btn-info">@lang('notification.send')</button>
                    </form>
                </div>
            </div>
