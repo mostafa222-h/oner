@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmail;
 use App\Mail\TopicCreated;
 use App\Models\User;
 use App\services\notifications\constant\EmailTypes;
@@ -12,19 +13,20 @@ use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
- /*   protected $user;
+    protected $user;
 
 
     public function __construct(User $user)
     {
         $this->user = $user;
-    }*/
+    }
 
     //اگر درخاست کاربر شماره مبایل بود خب اس ام اس اگر ایمیل بود دایمیل ارسال بشه...
     //باید درخاست ولیدیت بشه...و مشخص بشه که چیه...
-  /*  public function send(Request $request)
+    public function send(Request $request)
     {
-   if ($request->input('mobile-number')) {
+       // SendEmail::dispatch() ;
+  if ($request->input('mobile-number')) {
             //ولیدیت مبایل
             //$user = User::find(1);
           //  $a = $user['phone_number'] ;
@@ -42,8 +44,8 @@ class NotificationsController extends Controller
             throw new \Exception('this name not allowed');
         }
 
-    }*/
-   public function email()
+    }
+   /*public function email()
     {
         $users =  User::all() ;
         $emailTypes = EmailTypes::toString();
@@ -52,10 +54,15 @@ class NotificationsController extends Controller
 
     public function sendEmail(Request $request)
     {
+
         $request->validate([
             'user' => 'integer | exists : users,id' ,
             'email_type' => ''
         ]);
-        dd($request->all());
-    }
+
+
+       $notification = resolve(Notification::class);
+        $mailable = EmailTypes::toMail($request->email_type);
+       $notification->sendEmail(User::find($request->user),new $mailable);
+    } */
 }

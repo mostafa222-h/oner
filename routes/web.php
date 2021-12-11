@@ -43,9 +43,8 @@ Route::get('/users', function () {
 });
 
 Route::get('/email', function (){
-
+    //job queue
     SendEmail::dispatch() ;
-  // Mail::to("a.xareian@gmail.com")->send(new TopicCreated());
 });
 
 Route::get('/sendmail', function (){
@@ -88,16 +87,16 @@ Route::get('/sends', function (){
     $not = new Notification(new SmsProvider($c,'2تست'));
     return $not->processClass(new SmsProvider($c,'2تست'));
 });
-Route::get('/telegram', function (){
+/*Route::get('/telegram', function (){
 
     $notification = resolve(Notification::class);
     $notification->sendTelegram(User::find(1),new TopicCreated());
 
-});
+});*/
 //هر وقت درخواستمون رفت به notification
 //و send email
-Route::get('/notification/send-email','NotificationsController@email')->name('notification.form.email');
-Route::post('/notification/send-email','NotificationsController@Sendemail')->name('notification.send.email');
+/*Route::get('/notification/send-email','NotificationsController@email')->name('notification.form.email');
+Route::post('/notification/send-email','NotificationsController@Sendemail')->name('notification.send.email');*/
 //ارسال داینامیک
-//Route::get('/notification/sends','NotificationsController@send')->name('notification.form.send');
+Route::get('/notification/sends','NotificationsController@send')->name('notification.form.send');
 
