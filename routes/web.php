@@ -6,6 +6,7 @@ use App\Models\User;
 use App\services\notifications\Notification;
 use App\services\notifications\providers\EmailProvider;
 use App\services\notifications\providers\SmsProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
@@ -100,3 +101,36 @@ Route::post('/notification/send-email','NotificationsController@Sendemail')->nam
 //ارسال داینامیک
 Route::get('/notification/sends','NotificationsController@send')->name('notification.form.send');
 
+//Route::get('/register','AuthController@register')->name('register');
+
+
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Route::get('/home', 'HomeController@dashboard')->name('home');
+
+Route::get('logout',function (){
+    Auth::logout();
+});

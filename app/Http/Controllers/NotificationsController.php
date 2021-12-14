@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendEmail;
+use App\Jobs\SendEmailTwo;
+use App\Jobs\SendSms;
 use App\Mail\TopicCreated;
 use App\Models\User;
 use App\services\notifications\constant\EmailTypes;
@@ -13,7 +15,7 @@ use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
-    protected $user;
+   protected $user;
 
 
     public function __construct(User $user)
@@ -27,18 +29,10 @@ class NotificationsController extends Controller
     {
        // SendEmail::dispatch() ;
   if ($request->input('mobile-number')) {
-            //ولیدیت مبایل
-            //$user = User::find(1);
-          //  $a = $user['phone_number'] ;
-            $b = json_encode($request->input('mobile-number')) ;
-            $c =array( '0' . $b);
-            $not = new Notification(new SmsProvider($c,'2تست'));
-            return $not->processClass(new SmsProvider($c,'2تست'));
+            SendSms::dispatch();
         }
         elseif ($request->input('mail')){
-            //ولیدیت ایمیل
-            $not = new Notification(new EmailProvider(User::find(1),new TopicCreated()));
-            return $not->processClass(new EmailProvider(User::find(1),new TopicCreated()));
+            SendEmailTwo::dispatch() ;
         }
         else{
             throw new \Exception('this name not allowed');
