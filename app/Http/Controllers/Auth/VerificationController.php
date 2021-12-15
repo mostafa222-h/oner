@@ -45,7 +45,7 @@ class VerificationController extends Controller
 
     public function send()
     {
+        Auth::user()->SendEmailVerificationNotification();
 
-        dd(Auth::user());
     }
 }

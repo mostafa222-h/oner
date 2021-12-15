@@ -15,7 +15,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "predis/predis": "^1.1",
-
+        "ext-http": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

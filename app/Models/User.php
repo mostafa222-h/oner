@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Jobs\SendEmailTwo;
+use App\Mail\VerificationEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,7 +47,7 @@ class User extends Authenticatable
 
     public function SendEmailVerificationNotification ()
     {
-        SendEmailTwo::dispatch();
+        SendEmailTwo::dispatch($this,new VerificationEmail($this));
     }
 
 }
