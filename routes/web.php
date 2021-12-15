@@ -9,7 +9,8 @@ use App\services\notifications\providers\SmsProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,19 +21,23 @@ use Illuminate\Support\Facades\Mail;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('home');
-});
-/////////
-///
-Route::get('/test', function () {
+/*Route::get('/', function () {
+    $url = URL::temporarySignedRoute('test' ,now()->addMinutes(60),['id'=>12]);
+   // return view('home');
+    dd($url);
+});*/
+/*Route::get('/', function ( Request $request) {
+    $url = URL::hasValidSignature($request);
+   // return view('home');
+    dd($url);
+});*/
+/*Route::get('test',function (){
+    return 'hi' ;
+})->name('test');*/
+/*Route::get('/test', function () {
     return view('layouts.layout');
-});
-///
-///
-///
-Route::get('/contact', function () {
+});*/
+/*Route::get('/contact', function () {
     return view('contact');
 });
 Route::get('/about', function () {
@@ -41,18 +46,15 @@ Route::get('/about', function () {
 Route::get('/users', function () {
     $users = User::all();
     return view( 'user' , ['users' => $users ] );
-});
+});*/
 
 Route::get('/email', function (){
     //job queue
     SendEmail::dispatch() ;
 });
-
 Route::get('/sendmail', function (){
-
     $not = new Notification(new EmailProvider(User::find(1),new TopicCreated()));
     return $not->processClass(new EmailProvider(User::find(1),new TopicCreated()));
-
 });
 
 /*Route::get('/sends', function (){
@@ -70,8 +72,6 @@ Route::get('/sendmail', function (){
     $notification->sendSms($mobile_numbers,'1تست');
 
 });*/
-
-
 Route::get('/sends', function (){
 /*   $user = User::find(1);
     $a = $user['phone_number'] ;
@@ -100,8 +100,8 @@ Route::get('/sends', function (){
 Route::post('/notification/send-email','NotificationsController@Sendemail')->name('notification.send.email');*/
 //ارسال داینامیک
 Route::get('/notification/sends','NotificationsController@send')->name('notification.form.send');
-
 //Route::get('/register','AuthController@register')->name('register');
+
 
 
 
@@ -115,6 +115,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
+
+
+
+
+
+
+
+Route::group(['namespace' => 'Auth','prefix'=>'auth','middleware'=>'auth'], function() {
+    Route::get('/verification', 'VerificationController@send');
+});
 
 
 

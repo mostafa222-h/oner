@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -35,8 +36,16 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
+        //هر یوزری خواست به این کنترلر درخواست بزنه حتما باید لاگین باشه
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
+        //در 1مین بیشتر از 6 تا ارسال نشه
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    public function send()
+    {
+
+        dd(Auth::user());
     }
 }

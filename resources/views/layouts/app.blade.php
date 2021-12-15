@@ -20,6 +20,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+   @if (session('must verify your email'))
+       <div class="alert alert-danger">
+           @lang('auth.you must verify your email')
+       </div>
+
+
+
+   @endif
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

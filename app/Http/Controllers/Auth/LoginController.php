@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,13 +22,14 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    protected $maxAttempts = 2 ;
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -45,17 +46,34 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(\Illuminate\Http\Request $request)
+    public function login(Request $request)
     {
         $this->validateForm($request) ;
+        if ( $this->hasTooManyLoginAttempts($request))
+        {
+
+            //رسپانسی که به کاربر بر میگردونه مثلا شما به مدت 1مین قفل شدی نمیتونی لاگین کنی...
+            return $this->sendLockoutResponse($request);
+        }
 
        // Auth::attempt($request->only('email','password'),$request->filled('remember'));
         if ($this->attemptLogin($request)) {
-            return loginAndRedirect();
+            return $this->sendSuccessResponse();
         }
+        $this->incrementLoginAttempts($request);
+        return $this->sendLoginFailedResponse();
 
     }
-    protected function validateForm(\Illuminate\Http\Request $request)
+
+    protected function sendSuccessResponse(){
+        return redirect()->intended();
+    }
+    protected function sendLoginFailedResponse(){
+        return back()->with('wrong Credetials',true);
+    }
+
+
+    protected function validateForm(Request $request)
     {
 
         return $this->validate($request, [
@@ -70,6 +88,18 @@ class LoginController extends Controller
     }
     protected function attemptLogin(Request $request)
     {
+       return Auth::attempt($request->only('email','password'),$request->filled('remember'));
+    }
 
+    public function logout()
+    {
+
+        //invalid users session...
+        session()->invalidate();
+        Auth::logout();
+        return redirect(route('home'));
+    }
+    protected function username(){
+        return 'email' ;
     }
 }
