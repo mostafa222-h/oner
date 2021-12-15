@@ -15,10 +15,11 @@ class VerificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
     private $user;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User $user
      */
     public function __construct(User $user)
     {
@@ -30,14 +31,15 @@ class VerificationEmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): VerificationEmail
     {
         return $this->markdown('emails.verification-email')->with([
             'link' => $this->generateUrl(),
             'name' => $this->user->name
         ]);
     }
-    protected function generateUrl(){
+    protected function generateUrl(): string
+    {
        return URL::temporarySignedRoute('auth.email.verify',now()->addMinutes(120),['email'=>$this->user->email]);
     }
 }

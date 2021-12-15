@@ -44,8 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * @var mixed
+     */
+    private $email;
 
-    public function SendEmailVerificationNotification ()
+    public function sendEmailVerificationNotification()
     {
         SendEmailTwo::dispatch($this,new VerificationEmail($this));
     }
