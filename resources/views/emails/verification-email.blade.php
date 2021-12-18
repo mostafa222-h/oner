@@ -1,11 +1,10 @@
 @component('mail::message')
-# Verify Your Email
+# verify your email
 
-dear {{$name}}
-
+Dear {{$name}}
 
 @component('mail::button', ['url' => $link])
-    verify your Email.
+verify your email
 @endcomponent
 
 Thanks,<br>

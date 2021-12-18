@@ -45,7 +45,10 @@ class VerificationController extends Controller
 
     public function send()
     {
-        Auth::user()->SendEmailVerificationNotification();
+        //میگه از فساد AUTH و مودل یوزر این متد صدا بزن تا ایمیل وریفیکیشن برای یوزر ارسال بشه...
+        Auth::user()->sendEmailVerificationNotification() ;
+
+
 
     }
 }

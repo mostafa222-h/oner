@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Jobs\SendEmailTwo;
+use App\Jobs\VeriJob;
 use App\Mail\VerificationEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -47,11 +49,11 @@ class User extends Authenticatable
     /**
      * @var mixed
      */
-    private $email;
+
 
     public function sendEmailVerificationNotification()
     {
-        SendEmailTwo::dispatch($this,new VerificationEmail($this));
+        VeriJob::dispatchNow($this, new VerificationEmail($this));
     }
 
 }
