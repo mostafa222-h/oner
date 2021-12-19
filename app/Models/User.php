@@ -51,7 +51,7 @@ class User extends Authenticatable
      */
 
 
-  /* public function sendEmailVerificationNotification()
+  /*public function sendEmailVerificationNotification()
     {
         VeriJob::dispatch($this, new VerificationEmail($this));
     }*/

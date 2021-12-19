@@ -131,7 +131,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::group(['namespace' => 'Auth','prefix'=>'auth','middleware'=>'auth'], function() {
-    Route::get('/verification', 'VerificationController@send')->name('auth.email.send.verify');
+    Route::get('email/send-verification', 'VerificationController@send')->name('auth.email.send.verify');
     Route::get('email/verify','VerificationController@verify')->name('auth.email.verify');
 
 });
