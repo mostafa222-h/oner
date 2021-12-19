@@ -19,16 +19,17 @@ use Illuminate\Support\Facades\Mail;
 class VeriJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $user;
 
-    public function __construct(User $user)
+    public $user ;
+    public function __construct($user)
     {
+        $this->user = $user ;
         //the user property passed to the constructor through the job dispatch method
-        $this->user = $user;
     }
 
     public function handle($user)
     {
+
         Mail::to($this->user->email)->send(new VerificationEmail($user));
 
     }

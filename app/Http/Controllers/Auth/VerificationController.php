@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\VeriJob;
+use App\Mail\VerificationEmail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class VerificationController extends Controller
 {
@@ -45,10 +48,12 @@ class VerificationController extends Controller
 
     public function send()
     {
+        $user = auth()->user();
+
+       // dd();Auth::user()->email_verified_at
+       // VeriJob::dispatch();
         //میگه از فساد AUTH و مودل یوزر این متد صدا بزن تا ایمیل وریفیکیشن برای یوزر ارسال بشه...
-        Auth::user()->sendEmailVerificationNotification() ;
-
-
-
+       //111 Auth::user()->sendEmailVerificationNotification($user) ;
+        Mail::to($user->email)->send(new VerificationEmail($user));
     }
 }

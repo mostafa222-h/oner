@@ -123,8 +123,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::group(['namespace' => 'Auth','prefix'=>'auth','middleware'=>'auth'], function() {
-    //Route::get('/verification', 'VerificationController@send')->name('auth.email.verify');
-    Route::get('email/verify','VerificationController@send')->name('auth.email.verify');
+    Route::get('/verification', 'VerificationController@send')->name('auth.email.verify');
+    //Route::get('email/verify','VerificationController@send')->name('auth.email.verify');
 });
 
 
