@@ -22,12 +22,17 @@
 <body>
    @if (session('must verify your email'))
        <div class="alert alert-danger">
-           @lang('auth.you must verify your email')
+           @lang('auth.you must verify your email',['link'=>route('auth.email.send.verify')])
+       </div>
+   @endif
+   @if (session('VerificationEmailSent'))
+       <div class="alert alert-success text-center">
+           @lang('auth.verification email sent')
        </div>
 
-
-
    @endif
+
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

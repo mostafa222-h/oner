@@ -21,6 +21,14 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+
+    return view('home');
+
+});
+
+
+
 /*Route::get('/', function () {
     $url = URL::temporarySignedRoute('test' ,now()->addMinutes(60),['id'=>12]);
    // return view('home');
@@ -123,8 +131,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::group(['namespace' => 'Auth','prefix'=>'auth','middleware'=>'auth'], function() {
-    Route::get('/verification', 'VerificationController@send')->name('auth.email.verify');
-    //Route::get('email/verify','VerificationController@send')->name('auth.email.verify');
+    Route::get('/verification', 'VerificationController@send')->name('auth.email.send.verify');
+    Route::get('email/verify','VerificationController@verify')->name('auth.email.verify');
+
 });
 
 
