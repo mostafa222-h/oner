@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegister;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -86,6 +87,7 @@ class RegisterController extends Controller
         $user = $this->create($request->all());
 
         Auth::login($user);
+        event(new  UserRegister($user));
         return redirect()->route('home');
     }
     protected function validateForm(Request $request){

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\VeriJob;
 use App\Mail\VerificationEmail;
 use App\Providers\RouteServiceProvider;
+use App\Models\User;
 
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
@@ -49,20 +50,26 @@ class VerificationController extends Controller
         //این میدل ویر روی متد سند ووری فای مار کنه فقط
         $this->middleware('throttle:6,1')->only('verify', 'send');
     }
-
     public function send()
     {
         //اگر وری فای شده بود بفرسش به صفحه اصلی که دیگه درخاس نده
-        if (auth()->user()->hasVerifiedEmail()) {
+       /* if (auth()->user()->hasVerifiedEmail()) {
             return redirect()->route('home');
-        }
+        }*/
         $user = auth()->user();
 
-       // dd();Auth::user()->email_verified_at
-       // VeriJob::dispatch();
+        // dd();Auth::user()->email_verified_at
+        // VeriJob::dispatch();
+
+
+
+
+
+
+
         //میگه از فساد AUTH و مودل یوزر این متد صدا بزن تا ایمیل وریفیکیشن برای یوزر ارسال بشه...
-       //111 Auth::user()->sendEmailVerificationNotification($user) ;
-        Mail::to($user->email)->send(new VerificationEmail($user));
+      //Auth::user()->sendEmailVerificationNotification();
+       Mail::to($user->email)->send(new VerificationEmail($user));
         return back()->with('VerificationEmailSent',true);
     }
 
@@ -73,6 +80,7 @@ class VerificationController extends Controller
           return redirect()->route('home');
       }
         $request->user()->markEmailAsVerified();
-      return redirect()->route('home')->with('emailHasVeryfied',true);
+      session()->forget('mustVerifyEmail');
+      return redirect()->route('home')->with('emailHasVerified',true);
     }
 }

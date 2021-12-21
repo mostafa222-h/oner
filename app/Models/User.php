@@ -46,14 +46,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     /**
+     * @return \Illuminate\Foundation\Bus\PendingDispatch
      * @var mixed
      */
 
 
-  /*public function sendEmailVerificationNotification()
+ /* public function sendEmailVerificationNotification()
     {
-        VeriJob::dispatch($this, new VerificationEmail($this));
+       //dd("ddddddd");
+       return VeriJob::dispatchNow($this, new VerificationEmail($this));
     }*/
 
 }

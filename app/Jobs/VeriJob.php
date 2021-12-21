@@ -27,10 +27,10 @@ class VeriJob implements ShouldQueue
         //the user property passed to the constructor through the job dispatch method
     }
 
-    public function handle($user)
+    public function handle()
     {
 
-        Mail::to($this->user->email)->send(new VerificationEmail($user));
+        Mail::to($this->user->email)->send(new VerificationEmail($this->user));
 
     }
 }
