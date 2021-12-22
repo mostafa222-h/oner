@@ -55,7 +55,7 @@ Route::get('/users', function () {
     $users = User::all();
     return view( 'user' , ['users' => $users ] );
 });*/
-
+//rout foe send email in job
 Route::get('/email', function (){
     //job queue
     SendEmail::dispatch() ;
@@ -114,7 +114,7 @@ Route::get('/notification/sends','NotificationsController@send')->name('notifica
 
 
 
-
+//code main homw ya dashboard
 
 Auth::routes();
 

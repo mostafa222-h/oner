@@ -8,6 +8,7 @@ use App\Mail\VerificationEmail;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -75,6 +76,10 @@ class VerificationController extends Controller
 
     public function verify(Request $request)
     {
+        // که یوزر باهاش لاگین شده با ایمیلی که تو لینک برابر نبود...
+        if ($request->user()->email != $request->query('email')){
+            throw new AuthorizationException();
+        }
 
       if ($request->user()->hasVerifiedEmail()) {
           return redirect()->route('home');
