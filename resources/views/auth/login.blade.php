@@ -3,7 +3,7 @@
 
     <div class="limiter">
         <div class="container-login100" style="background-image: url('/assets/images/img-01.jpg');">
-            <div class="wrap-login100 p-t-190 p-b-30">
+            <div class="wrap-login100">
                 <form method="post" action="{{ route('login') }}" class="login100-form validate-form">
                     @csrf
                     <div class="login100-form-avatar">
@@ -58,7 +58,7 @@
                         </button>
                     </div>
 
-                    <div class="text-center w-full p-t-25 p-b-230">
+                    <div class="text-center w-full ">
                         <a href="{{ route('password.request') }}" class="txt1">
                             {{ __('Forgot Your Password?') }}
 

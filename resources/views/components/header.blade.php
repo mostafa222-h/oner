@@ -15,9 +15,10 @@
             </ul>
 
             <!-- Right Side Of Navbar -->
+            @auth
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->name}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <button class="dropdown-item" type="button"onclick="event.preventDefault();
@@ -28,6 +29,12 @@
                     </form>
                 </div>
             </div>
+            @else
+                <a class="txt1" href="{{ route('login') }}">
+                    {{ __('signin / signup') }}
+                    <i class="fa fa-long-arrow-right"></i>
+                </a>
+            @endauth
         </div>
     </div>
 </nav>
